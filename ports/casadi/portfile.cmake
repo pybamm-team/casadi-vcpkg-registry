@@ -11,8 +11,10 @@ vcpkg_configure_cmake(
   PREFER_NINJA
 )
 vcpkg_install_cmake()
+
+# Note: it was lib/cmake/${PORT} on a mac
 vcpkg_fixup_cmake_targets(
-  CONFIG_PATH lib/cmake/${PORT}
+  CONFIG_PATH ${PORT}/cmake
 )
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
