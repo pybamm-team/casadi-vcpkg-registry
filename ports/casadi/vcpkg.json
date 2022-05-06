@@ -1,0 +1,7 @@
+{
+    "name": "casadi",
+    "port-version": 0,
+    "version-semver": "1.0.0",
+    "homepage": "https://web.casadi.org/",
+    "description": "CasADi"
+}
