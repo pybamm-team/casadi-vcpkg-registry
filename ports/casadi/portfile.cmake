@@ -23,8 +23,7 @@ vcpkg_fixup_pkgconfig()
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/casadi/pkgconfig")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/casadi/pkgconfig")
 
-file(RENAME "${CURRENT_PACKAGES_DIR}/casadi/include" "${CURRENT_PACKAGES_DIR}/include")
-file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/casadi/include")
+file(COPY "${CURRENT_PACKAGES_DIR}/casadi/include" DESTINATION "${CURRENT_PACKAGES_DIR}")
 
 file(
   INSTALL "${SOURCE_PATH}/LICENSE.txt"
