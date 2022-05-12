@@ -6,9 +6,17 @@ vcpkg_from_github(
   HEAD_REF master
 )
 
+
+string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "static" CASADI_BUILD_STATIC)
+string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" CASADI_BUILD_SHARED)
+
 vcpkg_configure_cmake(
   SOURCE_PATH "${SOURCE_PATH}"
   PREFER_NINJA
+  OPTIONS 
+    -DBUILD_STATIC_LIBS=${CASADI_BUILD_STATIC}
+    -DBUILD_SHARED_LIBS=${CASADI_BUILD_SHARED}
+
 )
 vcpkg_install_cmake()
 
