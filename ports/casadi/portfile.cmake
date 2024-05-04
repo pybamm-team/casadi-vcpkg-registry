@@ -1,8 +1,8 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO casadi/casadi
-  REF 3.6.4
-  SHA512 4dcc2a328667d1d7e4b3ff2aac86edbdae2bcaf1afc73b42a02bb343d431ea83ee0b1ea4510fd23b05d49ccfed9f41d2129112622f5206a91e90ff48d9ac35c9
+  REF 3.6.5
+  SHA512 cf1df8d1cde17107da63b06ae755a3b8480f115eb28b64a144f61be58edc431b3783699aac378f6207cb5950bec0033c52dd7d47a81a87bedfc842967db29cfd
   HEAD_REF master
 )
 
