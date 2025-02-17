@@ -1,4 +1,4 @@
-#
+# PyBaMM CasADi VCPKG registry
 
 A [vcpkg](https://github.com/microsoft/vcpkg) registry providing a portfile for the
 [CasADi](https://github.com/casadi/casadi) package.
