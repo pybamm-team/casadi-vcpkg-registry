@@ -7,8 +7,6 @@ See
 - [Selecting library features](https://github.com/microsoft/vcpkg/blob/master/docs/users/selecting-library-features.md)
 - [Registries: Bring your own libraries to vcpkg](https://devblogs.microsoft.com/cppblog/registries-bring-your-own-libraries-to-vcpkg/)
 
-### Why a separate registry?
-
 ## Installing CasADi from this registry
 
 You need to tell you vcpkg installation to look for sundials port here, instead
