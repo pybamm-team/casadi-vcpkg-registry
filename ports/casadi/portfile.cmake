@@ -1,8 +1,8 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO casadi/casadi
-  REF 3.6.7
-  SHA512 2c95368281f0bda385c6c451e361c168589f13aa66af6bc6fadf01f899bcd6c785ea7da3dee0fb5835559e58982e499182a4d244af3ea208ac05f672ea99cfd1
+  REF 3.7.2
+  SHA512 ebd1d91f18b29620c8898fd014e35eefce2d621f9a698a14454b478cded78087bffa3651d808908a16ed8864571c7ddae99e387e53cb79a451ca60a8d690c8bb
   HEAD_REF master
 )
 # Tip for later: use git rev-parse HEAD:ports/<port-name> to update the git tree
