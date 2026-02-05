@@ -1,8 +1,8 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO casadi/casadi
-  REF 3.6.7
-  SHA512 2c95368281f0bda385c6c451e361c168589f13aa66af6bc6fadf01f899bcd6c785ea7da3dee0fb5835559e58982e499182a4d244af3ea208ac05f672ea99cfd1
+  REF 3.7.2
+  SHA512 ebd1d91f18b29620c8898fd014e35eefce2d621f9a698a14454b478cded78087bffa3651d808908a16ed8864571c7ddae99e387e53cb79a451ca60a8d690c8bb
   HEAD_REF master
 )
 # Tip for later: use git rev-parse HEAD:ports/<port-name> to update the git tree
@@ -14,28 +14,32 @@ string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" CASADI_BUILD_SHARED)
 vcpkg_configure_cmake(
   SOURCE_PATH "${SOURCE_PATH}"
   PREFER_NINJA
-  OPTIONS 
+  OPTIONS
     -DENABLE_STATIC=${CASADI_BUILD_STATIC}
     -DENABLE_SHARED=${CASADI_BUILD_SHARED}
 
 )
 vcpkg_install_cmake()
 
-# Note: it was lib/cmake/${PORT} on a mac
+# CasADi 3.7+ respects CMAKE_INSTALL_LIBDIR (set to lib by vcpkg) for
+# pkgconfig, but cmake config still installs to casadi/cmake on Windows
+# since vcpkg doesn't set CMAKE_PREFIX_RELATIVE.
 vcpkg_fixup_cmake_targets(
   CONFIG_PATH ${PORT}/cmake
 )
 
-file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/lib/pkgconfig")
-file(RENAME "${CURRENT_PACKAGES_DIR}/debug/casadi/pkgconfig/casadi.pc" "${CURRENT_PACKAGES_DIR}/lib/pkgconfig/casadi.pc")
 vcpkg_fixup_pkgconfig()
+
+# Clean up any leftover casadi/ prefix directories from the install
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/casadi/pkgconfig")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/casadi/pkgconfig")
 
-file(COPY "${CURRENT_PACKAGES_DIR}/casadi/include" DESTINATION "${CURRENT_PACKAGES_DIR}")
+# Copy headers if they ended up under casadi/include instead of include/
+if(EXISTS "${CURRENT_PACKAGES_DIR}/casadi/include")
+  file(COPY "${CURRENT_PACKAGES_DIR}/casadi/include" DESTINATION "${CURRENT_PACKAGES_DIR}")
+endif()
 
 file(
   INSTALL "${SOURCE_PATH}/LICENSE.txt"
   DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}"
   RENAME copyright)
-
