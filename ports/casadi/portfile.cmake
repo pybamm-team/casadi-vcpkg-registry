@@ -14,28 +14,31 @@ string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" CASADI_BUILD_SHARED)
 vcpkg_configure_cmake(
   SOURCE_PATH "${SOURCE_PATH}"
   PREFER_NINJA
-  OPTIONS 
+  OPTIONS
     -DENABLE_STATIC=${CASADI_BUILD_STATIC}
     -DENABLE_SHARED=${CASADI_BUILD_SHARED}
 
 )
 vcpkg_install_cmake()
 
-# Note: it was lib/cmake/${PORT} on a mac
+# CasADi 3.7+ respects CMAKE_INSTALL_LIBDIR (set to lib by vcpkg), so cmake
+# config and pkgconfig files install to lib/ directly instead of casadi/.
 vcpkg_fixup_cmake_targets(
-  CONFIG_PATH ${PORT}/cmake
+  CONFIG_PATH lib/cmake/${PORT}
 )
 
-file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/lib/pkgconfig")
-file(RENAME "${CURRENT_PACKAGES_DIR}/debug/casadi/pkgconfig/casadi.pc" "${CURRENT_PACKAGES_DIR}/lib/pkgconfig/casadi.pc")
 vcpkg_fixup_pkgconfig()
+
+# Clean up any leftover casadi/ prefix directories from the install
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/casadi/pkgconfig")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/casadi/pkgconfig")
 
-file(COPY "${CURRENT_PACKAGES_DIR}/casadi/include" DESTINATION "${CURRENT_PACKAGES_DIR}")
+# Copy headers if they ended up under casadi/include instead of include/
+if(EXISTS "${CURRENT_PACKAGES_DIR}/casadi/include")
+  file(COPY "${CURRENT_PACKAGES_DIR}/casadi/include" DESTINATION "${CURRENT_PACKAGES_DIR}")
+endif()
 
 file(
   INSTALL "${SOURCE_PATH}/LICENSE.txt"
   DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}"
   RENAME copyright)
-
