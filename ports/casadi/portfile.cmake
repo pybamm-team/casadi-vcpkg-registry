@@ -21,10 +21,11 @@ vcpkg_configure_cmake(
 )
 vcpkg_install_cmake()
 
-# CasADi 3.7+ respects CMAKE_INSTALL_LIBDIR (set to lib by vcpkg), so cmake
-# config and pkgconfig files install to lib/ directly instead of casadi/.
+# CasADi 3.7+ respects CMAKE_INSTALL_LIBDIR (set to lib by vcpkg) for
+# pkgconfig, but cmake config still installs to casadi/cmake on Windows
+# since vcpkg doesn't set CMAKE_PREFIX_RELATIVE.
 vcpkg_fixup_cmake_targets(
-  CONFIG_PATH lib/cmake/${PORT}
+  CONFIG_PATH ${PORT}/cmake
 )
 
 vcpkg_fixup_pkgconfig()
